@@ -8,8 +8,8 @@
 * Normalize -> 正規劃數值，使數值收斂
 * Draw -> 畫出模型損失表格，輸出 loss.png
 * BuildTrain -> 
-  * past:選擇幾天前的資料 future
-  * 預測未來幾天的 price actual
+  * past : 選擇幾天前的資料 
+  * future : 預測未來幾天的 price actual
 * Training_Model -> 訓練模型，輸出 LSTM.h
 
 ## Predict.py
