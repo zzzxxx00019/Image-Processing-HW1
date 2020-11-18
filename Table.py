@@ -1,100 +1,65 @@
 import pandas as pd
-
+import numpy as np
 
 def Read_Data():
-    Barcelona = pd.read_csv('./5cityfeatures/Barcelona.csv')
-    Bilbao = pd.read_csv('./5cityfeatures/Bilbao.csv')
-    Madrid = pd.read_csv('./5cityfeatures/Madrid.csv')
-    Seville = pd.read_csv('./5cityfeatures/Seville.csv')
-    Valencia = pd.read_csv('./5cityfeatures/Valencia.csv')
+    Barcelona = pd.read_csv('./city_var2/Barcelona.csv')
+    Bilbao = pd.read_csv('./city_var2/Bilbao.csv')
+    Madrid = pd.read_csv('./city_var2/Madrid.csv')
+    Seville = pd.read_csv('./city_var2/Seville.csv')
+    Valencia = pd.read_csv('./city_var2/Valencia.csv')
     return Barcelona, Bilbao, Madrid, Seville, Valencia
 
-def Load_Energy_Data():
-    Dataset = pd.read_csv('./energy_dataset.csv')
-    Dataset = Dataset.drop( columns = ['time'] )
-    return Dataset
+def Average(Barcelona, Bilbao, Madrid, Seville, Valencia, column_name):
+    Barcelona = Barcelona.iloc[:][column_name].values
+    Bilbao = Bilbao.iloc[:][column_name].values
+    Madrid = Madrid.iloc[:][column_name].values
+    Seville = Seville.iloc[:][column_name].values
+    Valencia = Valencia.iloc[:][column_name].values
 
+    result = []
+    for i in range (35064):
+        t = (Barcelona[i] + Bilbao[i] + Madrid[i] + Seville[i] + Valencia[i])/5
+        result.append(t)
 
-def Data_Replace( City_Data ):
-    City_Data["weather_description"] = City_Data["weather_description"].str.replace(" ","_")
-
-    City_Data["weather_description"] = City_Data["weather_description"].str.replace("light_rain_and_snow", "0")
-    City_Data["weather_description"] = City_Data["weather_description"].str.replace("ragged_shower_rain", "1")
-    City_Data["weather_description"] = City_Data["weather_description"].str.replace("light_shower_snow", "2")
-    City_Data["weather_description"] = City_Data["weather_description"].str.replace("rain_and_snow", "3")
-    City_Data["weather_description"] = City_Data["weather_description"].str.replace("light_rain_and_snow", "4")
-    City_Data["weather_description"] = City_Data["weather_description"].str.replace("rain_and_drizzle", "5")
-    City_Data["weather_description"] = City_Data["weather_description"].str.replace("light_intensity_shower_rain", "6")
-    City_Data["weather_description"] = City_Data["weather_description"].str.replace("heavy_intensity_shower_rain", "7")
-    City_Data["weather_description"] = City_Data["weather_description"].str.replace("thunderstorm_with_light_rain", "8")
-    City_Data["weather_description"] = City_Data["weather_description"].str.replace("light_intensity_drizzle_rain", "9")
-    City_Data["weather_description"] = City_Data["weather_description"].str.replace("thunderstorm_with_heavy_rain", "10")
-    City_Data["weather_description"] = City_Data["weather_description"].str.replace("thunderstorm_with_rain", "11")
-    City_Data["weather_description"] = City_Data["weather_description"].str.replace("light_intensity_drizzle", "12")
-    City_Data["weather_description"] = City_Data["weather_description"].str.replace("proximity_thunderstorm", "13")
-    City_Data["weather_description"] = City_Data["weather_description"].str.replace("proximity_moderate_rain", "14")
-    City_Data["weather_description"] = City_Data["weather_description"].str.replace("proximity_drizzle", "15")
-    City_Data["weather_description"] = City_Data["weather_description"].str.replace("proximity_shower_rain", "16")
-    City_Data["weather_description"] = City_Data["weather_description"].str.replace("sky_is_clear", "17")
-    City_Data["weather_description"] = City_Data["weather_description"].str.replace("few_clouds", "18")
-    City_Data["weather_description"] = City_Data["weather_description"].str.replace("scattered_clouds", "19")
-    City_Data["weather_description"] = City_Data["weather_description"].str.replace("broken_clouds", "20")
-    City_Data["weather_description"] = City_Data["weather_description"].str.replace("overcast_clouds", "21")
-    City_Data["weather_description"] = City_Data["weather_description"].str.replace("light_rain", "22")
-    City_Data["weather_description"] = City_Data["weather_description"].str.replace("light_thunderstorm", "23")
-    City_Data["weather_description"] = City_Data["weather_description"].str.replace("moderate_rain", "24")
-    City_Data["weather_description"] = City_Data["weather_description"].str.replace("heavy_intensity_rain", "25")
-    City_Data["weather_description"] = City_Data["weather_description"].str.replace("very_heavy_rain", "26")
-    City_Data["weather_description"] = City_Data["weather_description"].str.replace("heavy_snow", "27")
-    City_Data["weather_description"] = City_Data["weather_description"].str.replace("thunderstorm", "28")
-    City_Data["weather_description"] = City_Data["weather_description"].str.replace("shower_rain", "29")
-    City_Data["weather_description"] = City_Data["weather_description"].str.replace("mist", "30")
-    City_Data["weather_description"] = City_Data["weather_description"].str.replace("fog", "31")
-    City_Data["weather_description"] = City_Data["weather_description"].str.replace("heavy_intensity_drizzle", "32")
-    City_Data["weather_description"] = City_Data["weather_description"].str.replace("sand_dust_whirls", "33")
-    City_Data["weather_description"] = City_Data["weather_description"].str.replace("sleet", "34")
-    City_Data["weather_description"] = City_Data["weather_description"].str.replace("light_snow", "35")
-    City_Data["weather_description"] = City_Data["weather_description"].str.replace("drizzle", "36")
-    City_Data["weather_description"] = City_Data["weather_description"].str.replace("snow", "37")
-    City_Data["weather_description"] = City_Data["weather_description"].str.replace("haze", "38") 
-    City_Data["weather_description"] = City_Data["weather_description"].str.replace("dust", "39")
-    City_Data["weather_description"] = City_Data["weather_description"].str.replace("smoke", "40")
-    City_Data["weather_description"] = City_Data["weather_description"].str.replace("squalls", "41")
-
-    #City_Data.drop_duplicates('weather_description', keep='first', inplace = True )
-    #City_Data = City_Data.loc[:,'weather_description']
-
-    City_Data = City_Data.drop(columns = ["dt_iso", "weather_main", "weather_icon"])
-
-    print ( City_Data )
-
-    return City_Data
-
+    Result = pd.DataFrame(result,columns=[column_name])
+    return Result
 
 if __name__ == '__main__' :
-    Barcelona, Bilbao, Madrid, Seville, Valencia = Read_Data()
-
-    Barcelona = Data_Replace ( Barcelona )
-    Barcelona.to_csv('./city_var2/Barcelona.csv')
-
-    Bilbao = Data_Replace ( Bilbao )
-    Bilbao.to_csv('./city_var2/Bilbao.csv')
-
-    Madrid = Data_Replace ( Madrid )
-    Madrid.to_csv('./city_var2/Madrid.csv')
-
-    Seville = Data_Replace ( Seville )
-    Seville.to_csv('./city_var2/Seville.csv')
-
-    Valencia = Data_Replace ( Valencia )
-    Valencia.to_csv('./city_var2/Valencia.csv')
+    Barcelona, Bilbao, Madrid, Seville, Valencia = Read_Data() 
     
-    #Energy = Load_Energy_Data()
-
-    #data = pd.concat ( [Barcelona, Energy], axis=1 )
-
-    #x = data.iloc[:,1:61].values
-    #y = data.iloc[:,61].values
-
-    #print ( x )
-    #print ( y )
+    C = Average(Barcelona, Bilbao, Madrid, Seville, Valencia, 'temp')
+    D = Average(Barcelona, Bilbao, Madrid, Seville, Valencia, 'temp_min')
+    E = Average(Barcelona, Bilbao, Madrid, Seville, Valencia, 'temp_max')
+    F = Average(Barcelona, Bilbao, Madrid, Seville, Valencia, 'pressure')
+    G = Average(Barcelona, Bilbao, Madrid, Seville, Valencia, 'humidity')
+    H = Average(Barcelona, Bilbao, Madrid, Seville, Valencia, 'wind_speed')
+    I = Average(Barcelona, Bilbao, Madrid, Seville, Valencia, 'wind_direction_N')
+    J = Average(Barcelona, Bilbao, Madrid, Seville, Valencia, 'wind_direction_NE')
+    K = Average(Barcelona, Bilbao, Madrid, Seville, Valencia, 'wind_direction_E')
+    L = Average(Barcelona, Bilbao, Madrid, Seville, Valencia, 'wind_direction_ES')
+    M = Average(Barcelona, Bilbao, Madrid, Seville, Valencia, 'wind_direction_S')
+    N = Average(Barcelona, Bilbao, Madrid, Seville, Valencia, 'wind_direction_SW')
+    O = Average(Barcelona, Bilbao, Madrid, Seville, Valencia, 'wind_direction_W')    
+    P = Average(Barcelona, Bilbao, Madrid, Seville, Valencia, 'wind_direction_WN')
+    Q = Average(Barcelona, Bilbao, Madrid, Seville, Valencia, 'rain_1h')
+    R = Average(Barcelona, Bilbao, Madrid, Seville, Valencia, 'rain_3h')
+    S = Average(Barcelona, Bilbao, Madrid, Seville, Valencia, 'snow_3h')
+    T = Average(Barcelona, Bilbao, Madrid, Seville, Valencia, 'clouds_all')
+    U = Average(Barcelona, Bilbao, Madrid, Seville, Valencia, 'weather_id')
+    V = Average(Barcelona, Bilbao, Madrid, Seville, Valencia, 'weather_clear')
+    W = Average(Barcelona, Bilbao, Madrid, Seville, Valencia, 'weather_clouds')
+    X = Average(Barcelona, Bilbao, Madrid, Seville, Valencia, 'weather_drizzle')
+    Y = Average(Barcelona, Bilbao, Madrid, Seville, Valencia, 'weather_dust')
+    Z = Average(Barcelona, Bilbao, Madrid, Seville, Valencia, 'weather_fog')
+    AA = Average(Barcelona, Bilbao, Madrid, Seville, Valencia, 'weather_haze')
+    AB = Average(Barcelona, Bilbao, Madrid, Seville, Valencia, 'weather_mist')
+    AC = Average(Barcelona, Bilbao, Madrid, Seville, Valencia, 'weather_rain')
+    AD = Average(Barcelona, Bilbao, Madrid, Seville, Valencia, 'weather_smoke')
+    AE = Average(Barcelona, Bilbao, Madrid, Seville, Valencia, 'weather_snow')
+    AF = Average(Barcelona, Bilbao, Madrid, Seville, Valencia, 'weather_squall')
+    AG = Average(Barcelona, Bilbao, Madrid, Seville, Valencia, 'weather_thunderstorm')
+    AI = Average(Barcelona, Bilbao, Madrid, Seville, Valencia, 'uv')
+    
+    result_table = pd.concat( [C,D,E,F,G,H,I,J,K,L,M,N,O,P,Q,R,S,T,U,V,W,X,Y,Z,AA,AB,AC,AD,AE,AF,AG,AI], axis=1 )
+    result_table.to_csv('MergeTable.csv')
+    
