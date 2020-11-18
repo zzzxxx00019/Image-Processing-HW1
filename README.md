@@ -1,7 +1,7 @@
 # Power Predict
 
 ## 工具版本
-* Tensorflow 2.3.1 ( GPU 版本 )
+* Tensorflow 2.3.1
 * Keras 2.4.3
 
 ## Table.py
