@@ -1,9 +1,14 @@
 # Power Predict
 
+## 工具版本
+* Tensorflow 2.3.1 ( GPU 版本 )
+* Keras 2.4.3
+
 ## Table.py
 * 對不同城市的資料合併 ( 加總取平均 )
 
 ## Train.py
+* Keras 版本不一致可能會導致 error 發生
 * LSTM_Model -> 直接在這更改模型結構
 * Normalize -> 正規劃數值，使數值收斂
 * Draw -> 畫出模型損失表格，輸出 loss.png
