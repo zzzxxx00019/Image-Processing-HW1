@@ -3,6 +3,7 @@ import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 
+
 def load_model():
     model = keras.models.load_model('LSTM.h')
     model.summary()
@@ -10,7 +11,7 @@ def load_model():
     return model
 
 def load_data():
-    City = pd.read_csv('./Barcelona.csv').drop(columns = ['Unnamed: 0', 'city_name'])
+    City = pd.read_csv('./MergeTable.csv').drop(columns = ['Unnamed: 0'])
     Data = pd.read_csv('./energy_dataset.csv')
     Data = Data.iloc[:]['price actual']
     
@@ -19,6 +20,7 @@ def load_data():
     print (Dataset)
     return Dataset
 
+'''devide data to train and predict train'''
 def build_data(data, past, future):
     X_train, Y_train = [], []
     for i in range(data.shape[0]-future-past):
@@ -26,11 +28,8 @@ def build_data(data, past, future):
         Y_train.append(np.array(data.iloc[i+past:i+past+future]['price actual']))
     return np.array(X_train), np.array(Y_train) 
 
+'''plot predict'''
 def draw_predict(predicted_data, actual_result, slide, fig_name):
-
-    print(predicted_data.shape)
-    print(actual_result.shape)
-
     fig = plt.figure()
     
     predict = []
@@ -46,9 +45,34 @@ def draw_predict(predicted_data, actual_result, slide, fig_name):
     plt.legend()
     fig.savefig(fig_name)
 
+'''draw CDF mape < 25'''
+def draw_CDF(data):
+    probability = []
+    for i in range (1, 25, 1):
+        tmp = np.sum(data < i)
+        probability.append(tmp/data.shape[0])
+    
+    print(probability)
+    
+    fig = plt.figure()
+    plt.plot(probability)
+    plt.xlabel('mape')
+    plt.ylabel('probability')
+    fig.savefig('CDF result')
+    
 if __name__ == '__main__' :
     data = load_data()
     x, y = build_data(data , 20, 1)
     
     model = load_model()
-    draw_predict(model.predict(x), y, 250, 'predict result')
+    pred_y = model.predict(x)
+    
+    MAPE_value = []
+    for i in range (y.shape[0]):
+        mape = (np.abs((pred_y[i]-y[i])/y[i]))*100
+        MAPE_value.append(mape)
+        
+    MAPE_value = np.array(MAPE_value)
+    #MAPE_value = np.sort(MAPE_value, axis=0)
+    draw_CDF(MAPE_value)
+    draw_predict(pred_y, y, 250, 'predict result')
