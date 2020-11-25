@@ -31,7 +31,10 @@
   * mape < 10 : 0.9270
   * mape < 20 : 0.9876
 
+![image](https://github.com/zzzxxx00019/Power_Predicted/blob/main/CDF%20result.png)
+
 ## TO DO
 1. 處理 dataset.csv 裡面的 bad data
 2. 調整模型參數
-3. 加入 time label 重新訓練模型
+3. 解決 overfitting 問題
+4. 加入 time label 重新訓練模型 ( done )
