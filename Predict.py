@@ -11,8 +11,8 @@ def load_model():
     return model
 
 def load_data():
-    City = pd.read_csv('./MergeTable.csv').drop(columns = ['Unnamed: 0'])
-    Data = pd.read_csv('./energy_dataset.csv')
+    City = pd.read_csv('./dataset/weather_dataset.csv').drop(columns = ['Unnamed: 0'])
+    Data = pd.read_csv('./dataset/energy_dataset.csv')
     Data = Data.iloc[:]['price actual']
     
     Dataset = pd.concat ( [City, Data], axis=1 )
@@ -43,22 +43,21 @@ def draw_predict(predicted_data, actual_result, slide, fig_name):
     plt.xlabel('Time')
     plt.ylabel('Price')    
     plt.legend()
-    fig.savefig(fig_name)
+    fig.savefig('./result_image/' + fig_name)
 
-'''draw CDF mape < 25'''
+'''draw CDF mape <= 25'''
 def draw_CDF(data):
     probability = []
-    for i in range (1, 25, 1):
-        tmp = np.sum(data < i)
-        probability.append(tmp/data.shape[0])
-    
-    print(probability)
+    for i in range (1, 26, 1):
+        tmp = np.sum(data < i) / data.shape[0]
+        probability.append(tmp)
+        print('Mape < ' + str(i) + ' : ' + str(tmp))
     
     fig = plt.figure()
     plt.plot(probability)
     plt.xlabel('mape')
     plt.ylabel('probability')
-    fig.savefig('CDF result')
+    fig.savefig('./result_image/CDF result')
     
 if __name__ == '__main__' :
     data = load_data()
@@ -73,6 +72,5 @@ if __name__ == '__main__' :
         MAPE_value.append(mape)
         
     MAPE_value = np.array(MAPE_value)
-    #MAPE_value = np.sort(MAPE_value, axis=0)
     draw_CDF(MAPE_value)
     draw_predict(pred_y, y, 250, 'predict result')
