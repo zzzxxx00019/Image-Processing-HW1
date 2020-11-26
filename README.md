@@ -46,6 +46,9 @@ _________________________________________________________________
 
 ![image](https://github.com/zzzxxx00019/Power_Predicted/blob/main/result_image/loss.png)
 
+* 模型訓練結果：
+  * loss: 1.2547 - mape: 2.4196 - val_loss: 2.0603 - val_mape: 3.9563
+
 ## Predict.py
 * 載入 LSTM 模型，預測整筆資料
 * 將實際值與預測值以圖形顯示
