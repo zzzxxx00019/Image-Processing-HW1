@@ -68,9 +68,17 @@ _________________________________________________________________
 ## 整體預測結果
 ![image](https://github.com/zzzxxx00019/Power_Predicted/blob/main/result_image/Train_Predict.png)
 
-## TO DO
-1. 處理 dataset.csv 裡面的 bad data
-2. 調整模型參數
-3. 改善 overfitting 問題
-4. Tabel 針對日出日落時間更動 UV 數值
-5. 針對人口分布改變合併權重
+## 滾動式預測結果
+* 每滾動一次的 Mape ：
+  * 第一次：1.98170024
+  * 第二次：3.22520863
+  * 第三次：4.39041544
+  * 第四次：5.57093576
+  * 第五次：6.67789061
+  * 第六次：7.74619979
+  * 第七次：8.69562266
+  * 第八次：9.51709105
+  * 第九次：10.21335281
+  * 第十次：10.81820889
+
+![image](https://github.com/zzzxxx00019/Power_Predicted/blob/main/result_image/Scroll%20Mape.jpg)
